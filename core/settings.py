@@ -9,12 +9,12 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = '24465gs74=%=oy45q&p7na=ry(v*b5v^j(*1#$!c^kk0i4ns^%'
+SECRET_KEY = os.environ.get('SECRET_KEY', 'secret-key')
 
 DEBUG = True
 
@@ -66,14 +66,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'core.wsgi.application'
 
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -102,3 +94,10 @@ USE_TZ = True
 
 
 STATIC_URL = '/static/'
+
+WEATHER_API = 'http://api.openweathermap.org/data/2.5/weather'
+WEATHER_API_KEY = os.environ.get('WEATHER_API_KEY')
+
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
+}
