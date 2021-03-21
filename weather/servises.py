@@ -1,7 +1,8 @@
 import requests
 from django.conf import settings
+from rest_framework import status
 
-from weather.serializers import WeatherInfoSerializer
+from weather.serializers import WeatherInfoSerializer, Weather404Serializer
 
 
 class WeatherService:
@@ -9,9 +10,21 @@ class WeatherService:
     def get_weather_info(cls, city: str):
         url = f'{settings.WEATHER_API}?q={city}&appid={settings.WEATHER_API_KEY}'
         response = requests.get(url)
-        if response.status_code == 200:
+        bad_json_response = {'message': 'Weather service not send expected_data'}
+        if response.status_code == status.HTTP_200_OK:
             serializer = WeatherInfoSerializer(data=response.json())
-            serializer.is_valid(raise_exception=True)
-            return serializer.data, response.status_code
+            if serializer.is_valid():
+                return serializer.data, status.HTTP_200_OK
+            else:
+                return bad_json_response, status.HTTP_400_BAD_REQUEST
+        elif response.status_code == status.HTTP_404_NOT_FOUND:
+            serializer = Weather404Serializer(data=response.json())
+            if serializer.is_valid():
+                return serializer.data, status.HTTP_404_NOT_FOUND
+            else:
+                return bad_json_response, status.HTTP_400_BAD_REQUEST
         else:
-            return response.json(), response.status_code
+            response = {
+                'message': 'something get wrong when getting data from wether server',
+            }
+            return response, status.HTTP_500_INTERNAL_SERVER_ERROR

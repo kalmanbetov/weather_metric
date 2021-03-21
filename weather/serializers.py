@@ -37,3 +37,7 @@ class WeatherInfoSerializer(serializers.Serializer):
     main = MainSerializer()
     wind = WindSerializer()
     sys = SysSerializer()
+
+
+class Weather404Serializer(serializers.Serializer):
+    message = serializers.CharField()
