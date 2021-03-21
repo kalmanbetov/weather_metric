@@ -25,6 +25,6 @@ class WeatherService:
                 return bad_json_response, status.HTTP_400_BAD_REQUEST
         else:
             response = {
-                'message': 'something get wrong when getting data from wether server',
+                'message': 'something get wrong when getting data from weather server',
             }
             return response, status.HTTP_500_INTERNAL_SERVER_ERROR

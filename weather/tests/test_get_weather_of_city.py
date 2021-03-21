@@ -78,6 +78,6 @@ class TestWeatherAPIView(TestCase):
     @mock.patch('requests.get', return_value=FailureMockResponse())
     def test_weather_failure(self, mocked):
         response = self.client.get('/weather/tests/')
-        expected_data = {'message': 'something get wrong when getting data from wether server',}
+        expected_data = {'message': 'something get wrong when getting data from weather server',}
         self.assertEqual(response.status_code, status.HTTP_500_INTERNAL_SERVER_ERROR)
         self.assertEqual(response.data, expected_data)
