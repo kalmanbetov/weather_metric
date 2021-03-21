@@ -1,4 +1,4 @@
-Weather Metric
+#Weather Metric
 
 Create `.env` file in `.envs/` from `.envs/.env.example`:
 
