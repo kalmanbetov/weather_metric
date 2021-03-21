@@ -9,5 +9,4 @@ RUN pip install -r req.txt
 COPY . /code/
 
 RUN chmod +x /code/entrypoint.sh
-RUN ls -l -a
 ENTRYPOINT ["bash","/code/entrypoint.sh"]
