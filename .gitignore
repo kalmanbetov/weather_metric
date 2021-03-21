@@ -104,7 +104,7 @@ Thumbs.db #thumbnail cache on Windows
 
 .prof
 
-.idea/*
+.idea/
 cmake-build-*/
 
 .idea/**/mongoSettings.xml
